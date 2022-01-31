@@ -6,20 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Web Components</title>
     <style>
-      *{
+      * {
         box-sizing: border-box;
       }
       html {
         --color-primary: rgb(138, 138, 241);
         font-family: sans-serif;
       }
+      body {
+        margin: 2rem;
+      }
 
-
+      /* .modal {
+        
+      } */
     </style>
+
+    <!-- Scripts -->
     <script src="tooltip.js"></script>
     <script src="confirm-link.js"></script>
+    <script src="modal.js"></script>
   </head>
   <body>
+    <!-- Tooltip -->
     <p>
       <uc-tooltip class="important" text="Web Components is a set of standards."
         ><span class="highlight"> Web Components</span></uc-tooltip
@@ -28,6 +37,26 @@
     </p>
     <uc-tooltip></uc-tooltip>
 
+    <!-- Confirm Link-->
     <a is="uc-confirm-link" href="https://www.google.com">Google</a>
+
+    <!-- Modal -->
+    <uc-modal>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+        molestie sapien non est varius semper. Fusce ornare dolor a convallis
+        scelerisque. Proin et orci urna. Ut at aliquam velit. Sed et hendrerit
+        lorem, vitae ultrices nisl. In id finibus sapien.
+      </p>
+    </uc-modal>
+    <p>Confirm choice</p>
+    <button>Show Details</button>
+    <script>
+      const confirmButton = document.querySelector("button");
+      const modal = document.querySelector('uc-modal');
+      confirmButton.addEventListener('click', () => {
+        modal.setAttribute('opened' , '')
+      })
+    </script>
   </body>
 </html>

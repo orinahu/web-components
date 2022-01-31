@@ -49,6 +49,12 @@ class Tooltip extends HTMLElement {
           border-radius: 50%;
 
         }
+
+        :host([opened]) #backdrop ,
+        :host([opened]) #modal {
+          opacity: 1;
+          pointerEvents: all;
+        }
         
 
       </style>
