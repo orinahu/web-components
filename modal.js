@@ -58,12 +58,12 @@ class Modal extends HTMLElement {
             }
 
             header {
-               padding: 1rem;
+               padding: 0.5rem;
                border-bottom: 1px solid #ccc;
             }
 
-            ::slotted(h1) {
-                font-size: 2rem;
+            slot[name="title"] {
+                font-size: 1rem;
                 margin: 0;
             }
 
@@ -88,7 +88,7 @@ class Modal extends HTMLElement {
             <section>
           </div>
         `;
-        
+
     // const slots = this.shadowRoot.querySelectorAll("slot");
     // slots[1].addEventListener("slotchange", (event) => {
     //   console.dir(slots[1].assignedNodes());
@@ -98,10 +98,9 @@ class Modal extends HTMLElement {
     const cancelButton = this.shadowRoot.querySelector("#cancel-btn");
     const confirmButton = this.shadowRoot.querySelector("#confirm-btn");
 
-    backdrop.addEventListener('click' , this._cancel.bind(this))
-    cancelButton.addEventListener("click", this._cancel.bind(this));
-    confirmButton.addEventListener("click", this._confirm.bind(this));
-
+    this.backdrop = backdrop.addEventListener("click", this._cancel);
+    this.cancelButton = cancelButton.addEventListener("click", this._cancel);
+    this.confirmButton = confirmButton.addEventListener("click", this._confirm);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -116,6 +115,12 @@ class Modal extends HTMLElement {
     return ["text"];
   }
 
+  disconnectedCallback() {
+    this.backdrop.removeEventListener("click", this._cancel);
+    this.cancelButton.removeEventListener("click", this._cancel);
+    this.confirmButton.removeEventListener("click", this._confirm);
+  }
+
   open() {
     this.setAttribute("opened", "");
     this.isOpen = true;
@@ -128,17 +133,17 @@ class Modal extends HTMLElement {
     this.isOpen = false;
   }
 
-  _cancel(event) {
+  _cancel = (event) => {
     this.hide();
-    const cancelEvent = new Event('cancel' , { bubbles: true , composed: true});
+    const cancelEvent = new Event("cancel", { bubbles: true, composed: true });
     event.target.dispatchEvent(cancelEvent);
-  }
+  };
 
-  _confirm() {
+  _confirm = () => {
     this.hide();
-    const confirmEvent = new Event('confirm');
+    const confirmEvent = new Event("confirm");
     this.dispatchEvent(confirmEvent);
-  }
+  };
 }
 
 customElements.define("uc-modal", Modal);
