@@ -42,6 +42,7 @@
 
     <!-- Modal -->
     <uc-modal>
+      <h1 slot="title">Please Confirm</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
         molestie sapien non est varius semper. Fusce ornare dolor a convallis
@@ -53,10 +54,21 @@
     <button>Show Details</button>
     <script>
       const confirmButton = document.querySelector("button");
-      const modal = document.querySelector('uc-modal');
-      confirmButton.addEventListener('click', () => {
-        modal.setAttribute('opened' , '')
+      const modal = document.querySelector("uc-modal");
+
+      modal.addEventListener('confirm', () => {
+        console.log("Confirm...")
       })
+
+      modal.addEventListener('cancel', () => {
+        console.log("Cancel...")
+      })
+
+      confirmButton.addEventListener("click", () => {
+        if (!modal.isOpen) {
+          modal.open();
+        }
+      });
     </script>
   </body>
 </html>
